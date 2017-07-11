@@ -1,0 +1,31 @@
+/* Steven Sober
+   07/07/2017
+   Homework-03b
+   style.css */
+
+body {
+	background-color: #ef9206;
+	font-family: "Georgia","Helvetica", Times, serif;
+	color: #6017af;
+	font-size: 18px;
+	line-height: 150%;
+	margin: 40px;
+}
+
+h1 {
+	
+	font-size: 40px;
+	padding-bottom: 20px;
+
+}
+
+h3 {
+	font-size: 30px;
+	padding-bottom: 40px;
+}
+
+h5 {
+	border-bottom-style: dotted;
+	border-bottom: purple;
+}
+
