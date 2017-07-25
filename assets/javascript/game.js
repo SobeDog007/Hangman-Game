@@ -10,7 +10,6 @@ var game = {
     dictionary:    ["clemson", "tigers", "football", "champions", "orange", "purple"],
     displayArray:  [],
     guessArray:    [],
-    winCheck:      "",
     numberGuesses: 12,
     gamesWon:      0,
 
@@ -43,42 +42,45 @@ var game = {
         		game.displayArray[i] = puzzle.charAt(i);
         		guessFound = true;
 
+        		// If no more dashes are in the array then the game is won!
         		if (!game.displayArray.includes("_"))
         		{
         			game.gamesWon++; 
+
+        			game.resetGame();
         		}
         	}
         }
 
         if (guessFound === false)
         {
-        	this.numberGuesses--;
-        	this.guessArray.push(userGuess);
-
-        	// Check to see if there are any guesses left.
-        	if (this.numberGuesses === 0)
+        	// If the user has already guessed this letter, do not penalize again.
+        	if (!this.guessArray.includes(userGuess))
         	{
+        		this.numberGuesses--;
+        		this.guessArray.push(userGuess);
 
-        		// Game Over!
+        		// Check to see if there are any guesses left.
+        		if (this.numberGuesses === 0)
+        		{
+        			// Game Over!
+        			game.resetGame();
+        		}
         	}
         }
-
-
-        
     },
 
-    redrawScreen()
+    resetGame: function()
     {
-
-
-
+		game.displayArray  = [];
+    	game.guessArray    = [];
+    	game.numberGuesses = 12;
     }
 };
 
 // VARIABLES
 // ==========================================================================
 var puzzle = "";
-var gameWon = false;
 
 // MAIN EXECUTION
 // ==========================================================================
@@ -102,13 +104,6 @@ document.onkeyup = function(event) {
     //Check the guessed letter against the puzzle word.
     game.guessChecker(userGuess, puzzle);
 
-    //redrawScreen();
-
-    //document.getElementById("wins").innerHTML = "Wins:   " + wins;
-    //document.getElementById("currentWord").innerHTML = "Current Word:   " + displayArray;
-    //document.getElementById("guessesRemaining").innerHTML = "Number of Guesses Remaining:  " + guesses;
-    //document.getElementById("guessArray").innerHTML = "Letters Already Guessed:  " + guessArray;
-
 	var html =
         "<p>Wins: " + game.gamesWon + "</p>" +
         "<p>Current Word: " + game.displayArray + "</p>" +
@@ -117,5 +112,4 @@ document.onkeyup = function(event) {
 
         // Set the inner HTML contents of the #game div to our html string
         document.querySelector("#game").innerHTML = html;
-
-    };
+};
